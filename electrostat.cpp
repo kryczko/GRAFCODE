@@ -62,17 +62,28 @@ good.erase(good.begin());
 good.erase(good.begin());
 good.erase(good.begin());
 
+
 double sum = 0, esp[nz];
 
 int counter = 0;	
 for (int i = 0; i < good.size(); i ++)
 {
 	sum += good[i];
-	if (i != 0 && i % (nx*ny) == 0)
+	
+	if (i != 0 && i % (nx*ny)  == 0) 
 	{
-		esp[counter] = sum/(nx*ny);
+		if (i == nx*ny)
+		{
+		esp[counter] = (sum - good[i - 1])/(nx*ny);
 		counter ++;
 		sum = 0;
+		}
+		else
+		{
+		esp[counter] = sum/(nx*ny);
+                counter ++;
+                sum = 0;
+		}
 	}
 } 
 	
