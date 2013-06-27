@@ -86,10 +86,12 @@ for (int i = 0; i < good.size(); i ++)
 		}
 	}
 } 
+double increment = 0;
 	
 for (int i = 0; i < nz; i ++)
 {
-	outputfile << (zlattice/(nz - i))/2. << "\t" <<  esp[i] << endl; 
+	increment += zlattice/nz;	
+	outputfile << increment  << "\t" <<  esp[i] << endl; 
 }
 	
 
