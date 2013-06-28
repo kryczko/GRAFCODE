@@ -7,7 +7,7 @@ from matplotlib.mlab import griddata
 
 nooa = 64
 
-f = open('esp_vs_z.dat', 'r')
+f = open('esp_vs_yz.dat', 'r')
 
 xcoords = []
 ycoords = []
@@ -35,8 +35,8 @@ zi = np.linspace(0., 23.4, 100)
 
 espi = griddata (ylist, zlist, esplist, yi, zi)
 
-CS = plt.contour(yi,zi,espi,10,linewidths=0.5,colors='k')
-CS = plt.contourf(yi,zi,espi,10,cmap=plt.cm.rainbow)
+CS = plt.contour(yi,zi,espi,5,linewidths=0.5,colors='k')
+CS = plt.contourf(yi,zi,espi,15,cmap=plt.cm.rainbow)
 plt.colorbar()
 
 
