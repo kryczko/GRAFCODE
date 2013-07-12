@@ -32,12 +32,12 @@ ifstream inputfile;
 ofstream outputfile;
 
 double zlattice;
-char sd;
+int  num;
 cout << "Please enter the inputfile: ";
 cin >> infile;
-cout << "Selective dynamics? (y or n): ";
-cin >> sd;
-cout << "Please enter the lattice constant in the z-direction: ";
+cout << "Number of different atoms: ";
+cin >> num;
+cout << "Please enter the z lattice constant: ";
 cin >> zlattice;
 cout << "\n##### CODE RUNNING, PLEASE WAIT A MOMENT #####\n\n";
 
@@ -45,7 +45,7 @@ cout << "\n##### CODE RUNNING, PLEASE WAIT A MOMENT #####\n\n";
 inputfile.open(infile.c_str());
 outputfile.open("esp_vs_z.dat");
 
-if (sd == 'n')
+if (num  == 1)
 {
 vector <string> stuff;
 string words;
@@ -56,7 +56,7 @@ while(!inputfile.eof())
 {
 	inputfile >> words;
 	stuff.push_back(words);
-	
+		
 	if (count == 11)
 	{
 		noa = atoi (words.c_str());
@@ -116,27 +116,36 @@ cout << "The vacuum energy is " << max(esp, nz) << " eV." << endl;
 
 }	
 
-// Selective dynamics option
+// for multiple types of atoms
 
-if (sd == 'y')
+if (num != 1)
 {
 vector <string> stuff;
 string words;
 vector <double> good;
 double values;
-int count = 0, noa, realstart(100000);
+int count = 0, noa, noa1, noa2, noa3, realstart(100000);
 while(!inputfile.eof())
 {
         inputfile >> words;
         stuff.push_back(words);
-
+	
         if (count == 11)
         {
-                noa = atoi (words.c_str());
+                noa1 = atoi (words.c_str());
                 realstart = count + noa*3 + 4; // for no selective dynamics
                 
         }
-
+	if (count == 12)
+	{
+		noa2 = atoi (words.c_str());
+	}
+	if (count == 13)
+	{
+		noa3 = atoi (words.c_str());
+		noa = noa1 + noa2 + noa3;
+		realstart = count + noa*3 + 2;
+	}
         if (count >= realstart)
         {
                 values = atof ( words.c_str() );
@@ -147,9 +156,8 @@ while(!inputfile.eof())
         count ++;
 }   
     
-    
 int nx = good[0], ny = good[1], nz = good[2];
-
+ 
 good.erase(good.begin());
 good.erase(good.begin());
 good.erase(good.begin());
